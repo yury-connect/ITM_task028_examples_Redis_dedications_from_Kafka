@@ -1,0 +1,1 @@
+# ITM_task028_examples_Redis_dedications_from_Kafka
