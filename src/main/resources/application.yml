@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: demo  # Добавлено двоеточие после "application" и отступ
+
+  data:
+    redis:
+      host: localhost    # Адрес Redis-сервера (можно заменить на IP или домен)
+      port: 6379         # Стандартный порт Redis
+      timeout: 5000      # Таймаут подключения в миллисекундах (5 сек)
+
+  kafka:               # Убрано лишнее "spring:" (секция уже вложена в spring)
+    consumer:
+      bootstrap-servers: localhost:9092  # Адреса брокеров Kafka (через запятую для кластера)
+      group-id: payment-group           # Идентификатор группы консьюмеров
+      auto-offset-reset: earliest       # Что делать, если нет сохранённого offset
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer   # Десериализатор ключа
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer # Десериализатор значения
