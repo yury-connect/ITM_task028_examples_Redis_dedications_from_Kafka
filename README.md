@@ -1,4 +1,4 @@
-# ITM_task028_examples_Redis_dedications_from_Kafka
+# ITM_task028_examples_Redis_deduplicate_from_Kafka
 
 ---
 #### В данном репозитории будет решена следующая распространенная проблема:

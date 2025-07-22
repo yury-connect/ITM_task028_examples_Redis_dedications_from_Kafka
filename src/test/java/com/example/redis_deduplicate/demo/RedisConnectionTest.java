@@ -1,11 +1,12 @@
-package com.example.redis_dedications.demo;
+package com.example.redis_deduplicate.demo;
 
+import com.example.redis_deduplicate.demo.exception.PaymentValidationException;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
-
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 
 // Проверьте подключение к Redis:
@@ -21,7 +22,7 @@ class RedisConnectionTest {
         try {
             String result = redisTemplate.opsForValue().get("test");
             log.info("Redis connection successful. Test value: {}", result);
-        } catch (Exception e) {
+        } catch (PaymentValidationException e) {
             log.error("Redis connection failed", e);
             throw e;
         }

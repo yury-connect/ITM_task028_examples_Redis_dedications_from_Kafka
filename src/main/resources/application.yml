@@ -2,6 +2,26 @@ spring:
   application:
     name: demo  # Добавлено двоеточие после "application" и отступ
 
+  datasource:
+    url: jdbc:postgresql://localhost:5432/redis-deduplicate_db
+    username: user
+    password: 1234
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate # Отключаем генерацию схемы Hibernate
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          time_zone: UTC
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+    default-schema: public
+
   data:
     redis:
       host: localhost    # Адрес Redis-сервера (можно заменить на IP или домен)
@@ -15,3 +35,5 @@ spring:
       auto-offset-reset: earliest       # Что делать, если нет сохранённого offset
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer   # Десериализатор ключа
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer # Десериализатор значения
+
+

@@ -1,0 +1,23 @@
+{
+  "metadata": {
+    "eventId": "7f4a8c01-2e3d-4b5f-89a1-0c6d7e8f9a0b",
+    "timestamp": "2024-07-20T12:00:00Z"
+  },
+  "payment": {
+    "id": "ПП-12345",
+    "docRef": "abc123def-4567-89gh-ijkl-mnopqrstuvwx",
+    "date": "2024-07-20",
+    "amount": 10000.50,
+    "currency": "RUB",
+    "sender": {
+      "account": "40702810500000012345",
+      "name": "ООО Ромашка"
+    },
+    "recipient": {
+      "account": "40817810200000054321",
+      "name": "ИП Иванов",
+      "inn": "1234567890"
+    },
+    "purpose": "Оплата по договору №123 от 2024-01-01"
+  }
+}

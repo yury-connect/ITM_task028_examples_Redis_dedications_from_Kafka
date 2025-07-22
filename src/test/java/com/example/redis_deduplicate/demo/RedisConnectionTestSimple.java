@@ -1,4 +1,4 @@
-package com.example.redis_dedications.demo;
+package com.example.redis_deduplicate.demo;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +10,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 
 @SpringBootTest
-public class RedisConnectionTestSimple {
+class RedisConnectionTestSimple {
 
     @Autowired
     private RedisConnectionFactory redisConnectionFactory;
