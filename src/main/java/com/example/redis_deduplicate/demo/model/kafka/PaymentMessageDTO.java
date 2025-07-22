@@ -2,7 +2,6 @@ package com.example.redis_deduplicate.demo.model.kafka;
 
 import com.example.redis_deduplicate.demo.model.entity.Metadata;
 import com.example.redis_deduplicate.demo.model.entity.Payment;
-import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,15 +9,18 @@ import lombok.Setter;
 import lombok.ToString;
 
 
-/**
- * 1. Main Payment Entity (Корневой класс)
- */
+import lombok.*;
+import jakarta.validation.constraints.*;
+
 @Getter
-@Setter
-@NoArgsConstructor
+@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @ToString
 public class PaymentMessageDTO {
-    private Metadata metadata;
-    private Payment payment;
+    @NotNull
+    private MetadataDTO metadata;
+
+    @NotNull
+    private PaymentDTO payment;
 }

@@ -1,40 +1,46 @@
 package com.example.redis_deduplicate.demo.model.kafka;
 
-import com.example.redis_deduplicate.demo.model.entity.Participant;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
+import com.example.redis_deduplicate.demo.exception.PaymentValidationException;
+import com.example.redis_deduplicate.demo.mapper.AmountMapper;
+import jakarta.validation.constraints.*;
+import lombok.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-
-/**
- * 3. Payment Entity
- */
 @Getter
-@Setter
-@NoArgsConstructor
+@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @ToString
 public class PaymentDTO {
+    @NotBlank
+    @Size(min = 1, max = 32)
+    private String id;
+
+    @NotBlank
+    private String docRef;
+
+    @NotNull
+    private LocalDate date;
+
+    @NotBlank
+    private String amount; // Принимаем как строку для точного парсинга
+
+    @NotBlank
+    @Size(min = 3, max = 3)
     private String currency;
-    private BigDecimal amount;
 
-    public long getAmountInMinorUnits() {
-        int decimals = CurrencyUtils.getDecimalsForCurrency(currency); // 100 для RUB/USD
-        return amount.multiply(BigDecimal.valueOf(decimals)).longValue();
+    @NotNull
+    private ParticipantDTO sender;
+
+    @NotNull
+    private ParticipantDTO recipient;
+
+    @Size(max = 512)
+    private String purpose;
+
+    // Метод для конвертации суммы
+    public long getAmountInMinorUnits() throws PaymentValidationException {
+        return AmountMapper.parseAmount(this.amount, this.currency);
     }
-
-
-    private String id;            // Номер документа ("ПП-12345")
-    private String docRef;        // GUID из 1С
-    private LocalDate date;       // Дата платежа
-    private String  amount;        // Сумма (BigDecimal для точных расчетов)
-    private String currency;      // Валюта ("RUB")
-    private Participant sender;   // Отправитель
-    private Participant recipient; // Получатель
-    private String purpose;       // Назначение платежа
 }

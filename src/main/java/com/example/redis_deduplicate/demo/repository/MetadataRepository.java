@@ -1,7 +1,7 @@
 package com.example.redis_deduplicate.demo.repository;
 
 import com.example.redis_deduplicate.demo.model.entity.Metadata;
-import org.hibernate.annotations.Immutable;
+import org.springframework.data.annotation.Immutable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -16,7 +16,7 @@ import java.util.UUID;
 3. Явное указание намерений в коде
  */
 @Repository
+@Immutable
 public interface MetadataRepository extends JpaRepository<Metadata, UUID> {
-    @Immutable
     Optional<Metadata> findByEventId(UUID eventId);
 }
