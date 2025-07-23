@@ -19,13 +19,8 @@ class RedisConnectionTest {
 
     @Test
     void testRedisConnection() {
-        try {
-            String result = redisTemplate.opsForValue().get("test");
-            log.info("Redis connection successful. Test value: {}", result);
-        } catch (PaymentValidationException e) {
-            log.error("Redis connection failed", e);
-            throw e;
-        }
+        String result = redisTemplate.opsForValue().get("test");
+        log.info("Redis connection successful. Test value: {}", result);
     }
 }
 
