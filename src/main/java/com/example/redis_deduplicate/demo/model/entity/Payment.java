@@ -24,7 +24,7 @@ public class Payment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(updatable = false, nullable = false, columnDefinition = "UUID")
+    @Column(name = "payment_id", updatable = false, nullable = false, columnDefinition = "UUID")
     @JdbcTypeCode(SqlTypes.UUID)
     private UUID id;
 
@@ -39,7 +39,7 @@ public class Payment {
     private LocalDate date;
 
     @Column(nullable = false, precision = 20, scale = 2)
-    private BigDecimal amount;
+    private Long amount;
 
     @Column(length = 3, nullable = false)
     private String currency;

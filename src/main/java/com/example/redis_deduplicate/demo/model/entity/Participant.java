@@ -23,7 +23,7 @@ public class Participant {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(updatable = false, nullable = false, columnDefinition = "UUID")
+    @Column(name = "participant_id", updatable = false, nullable = false, columnDefinition = "UUID")
     @JdbcTypeCode(SqlTypes.UUID)
     private UUID id;
 

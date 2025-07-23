@@ -22,7 +22,7 @@ public class PaymentMessage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(updatable = false, nullable = false, columnDefinition = "UUID")
+    @Column(name = "payment_message_id", updatable = false, nullable = false, columnDefinition = "UUID")
     @JdbcTypeCode(SqlTypes.UUID)
     private UUID id;
 

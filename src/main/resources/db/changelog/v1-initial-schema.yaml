@@ -1,7 +1,7 @@
 databaseChangeLog:
   - changeSet:
       id: 1
-      author: your_name
+      author: Yury
       changes:
         - createTable:
             tableName: metadata
@@ -69,7 +69,7 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: amount
-                  type: NUMERIC(20, 2)
+                  type: BIGINT
                   constraints:
                     nullable: false
               - column:
@@ -111,6 +111,7 @@ databaseChangeLog:
                     nullable: false
                     foreignKeyName: fk_message_metadata
                     references: metadata(event_id)
+                    unique: true
               - column:
                   name: payment_id
                   type: UUID
@@ -118,6 +119,7 @@ databaseChangeLog:
                     nullable: false
                     foreignKeyName: fk_message_payment
                     references: payments(payment_id)
+                    unique: true
 
         - createIndex:
             indexName: idx_payment_doc_ref

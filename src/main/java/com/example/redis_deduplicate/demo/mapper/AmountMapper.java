@@ -9,24 +9,24 @@ public class AmountMapper {
     private static final int MAX_AMOUNT_DIGITS = 15;
     private static final int MAX_SCALE = 2;
 
-    public static long parseAmount(String amountStr, String currency)
+    public static Long parseAmount(String amountStr, String currency)
             throws PaymentValidationException {
 
         try {
             BigDecimal amount = new BigDecimal(amountStr);
 
-            // Проверка масштаба
+            // Проверка масштаба (в дробной части должно быть не более 'MAX_SCALE' цифр)
             if (amount.scale() > MAX_SCALE) {
                 throw new PaymentValidationException(
-                        String.format("Сумма должна иметь не более %d знаков после запятой. Получено: %s",
+                        String.format("Сумма должна иметь не более %d знаков после запятой. Получено: '%s'",
                                 MAX_SCALE, amountStr)
                 );
             }
 
-            // Проверка на переполнение
+            // Проверка на переполнение (Количество цифр в числе должно быть не более 'MAX_AMOUNT_DIGITS - MAX_SCALE')
             if (amount.precision() - amount.scale() > MAX_AMOUNT_DIGITS - MAX_SCALE) {
                 throw new PaymentValidationException(
-                        String.format("Сумма слишком большая. Максимум %d цифр до запятой",
+                        String.format("Величина слишком большая. Максимум %d цифр до запятой",
                                 MAX_AMOUNT_DIGITS - MAX_SCALE)
                 );
             }
@@ -36,9 +36,9 @@ public class AmountMapper {
                     .longValueExact();
 
         } catch (NumberFormatException e) {
-            throw new PaymentValidationException("Некорректный формат суммы: " + amountStr);
+            throw new PaymentValidationException("Некорректный формат величины суммы: " + amountStr);
         } catch (ArithmeticException e) {
-            throw new PaymentValidationException("Ошибка конвертации суммы: " + e.getMessage());
+            throw new PaymentValidationException("Ошибка конвертации величины суммы: " + e.getMessage());
         }
     }
 
