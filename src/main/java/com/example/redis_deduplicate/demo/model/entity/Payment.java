@@ -29,7 +29,7 @@ public class Payment {
     private UUID id;
 
     @Column(name = "document_number", length = 32, nullable = false)
-    private String documentNumber;
+    private String documentNumber; // поле 'id' в Kafka
 
     @Column(name = "doc_ref", nullable = false, columnDefinition = "UUID")
     @JdbcTypeCode(SqlTypes.UUID)
