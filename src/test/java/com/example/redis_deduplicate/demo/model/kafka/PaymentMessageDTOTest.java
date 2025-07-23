@@ -23,11 +23,12 @@ import org.testcontainers.junit.jupiter.Container;
 
 
 import java.util.UUID;
-@Import(PaymentMapper.class) // удалить
+//@Import(PaymentMapper.class) // удалить
 @SpringBootTest(classes = DemoApplication.class)
 @Testcontainers
 class PaymentMessageDTOTest {
 
+    /*
     // этот блок удалить
     @TestConfiguration
     static class MapperCfg {
@@ -36,7 +37,7 @@ class PaymentMessageDTOTest {
             return Mappers.getMapper(PaymentMapper.class);
         }
     }
-
+    */
 
     @Container
     static final PostgreSQLContainer<?> POSTGRES =

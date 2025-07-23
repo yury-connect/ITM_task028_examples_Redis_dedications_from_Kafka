@@ -4,10 +4,10 @@ import jakarta.validation.constraints.*;
 import lombok.*;
 
 @Getter
-@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @ToString
+@Builder
 public class ParticipantDTO {
     @NotBlank
     @Size(min = 15, max = 34)

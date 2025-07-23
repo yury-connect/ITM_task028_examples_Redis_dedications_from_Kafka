@@ -13,10 +13,10 @@ import lombok.*;
 import jakarta.validation.constraints.*;
 
 @Getter
-@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @ToString
+@Builder
 public class PaymentMessageDTO {
     @NotNull
     private MetadataDTO metadata;

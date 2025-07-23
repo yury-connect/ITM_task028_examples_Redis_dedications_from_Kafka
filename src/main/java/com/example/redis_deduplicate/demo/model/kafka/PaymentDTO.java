@@ -8,10 +8,10 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Getter
-@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @ToString
+@Builder
 public class PaymentDTO {
     @NotBlank
     @Size(min = 1, max = 32)

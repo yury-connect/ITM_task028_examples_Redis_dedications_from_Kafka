@@ -4,7 +4,6 @@ import com.example.redis_deduplicate.demo.exception.PaymentValidationException;
 import com.example.redis_deduplicate.demo.model.entity.*;
 import com.example.redis_deduplicate.demo.model.kafka.*;
 import org.mapstruct.*;
-import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
@@ -26,22 +25,12 @@ public interface PaymentMapper {
     @Mapping(target = "inn", source = "inn")
     Participant toEntity(ParticipantDTO dto);
 
-
     // 3. Payment
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "documentNumber", source = "id")
-
-//    @Mapping(target = "docRef", source = "docRef")
     @Mapping(target = "docRef", expression = "java(UUID.fromString(dto.getDocRef()))")
-
-
     @Mapping(target = "date", source = "date")
-
-//    @Mapping(target = "amount",
-//            expression = "java(AmountMapper.parseAmount(dto.getAmount(), dto.getCurrency()))")
     @Mapping(target = "amount", source = "dto", qualifiedByName = "mapAmountSafe")
-
-
     @Mapping(target = "currency", source = "currency")
     @Mapping(target = "sender", source = "sender")
     @Mapping(target = "recipient", source = "recipient")
@@ -49,20 +38,18 @@ public interface PaymentMapper {
     Payment toEntity(PaymentDTO dto) throws PaymentValidationException;
 
 
+    // 4. PaymentMessage
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "metadata", source = "metadata")
     @Mapping(target = "payment", source = "payment")
     PaymentMessage toEntity(PaymentMessageDTO dto) throws PaymentValidationException;
 
 
-
     @Named("mapAmountSafe")
-//    default Long mapAmountSafe(String amount, String currency) throws PaymentValidationException {
     default Long mapAmountSafe(PaymentDTO dto) throws PaymentValidationException {
         if (dto.getAmount() == null || dto.getAmount().isBlank()) {
             throw new PaymentValidationException("Поле 'amount' не может быть пустым!");
         }
-
         return AmountMapper.parseAmount(dto.getAmount(), dto.getCurrency());
     }
 }
