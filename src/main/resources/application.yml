@@ -34,7 +34,12 @@ spring:
       bootstrap-servers: localhost:9092  # Адреса брокеров Kafka (через запятую для кластера)
       group-id: payment-group           # Идентификатор группы консьюмеров
       auto-offset-reset: earliest       # Что делать, если нет сохранённого offset
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer   # Десериализатор ключа
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer # Десериализатор значения
+#      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer   # Десериализатор ключа
+#      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer # Десериализатор значения
+
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: com.example.redis_deduplicate.demo.model.kafka
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
 
 
