@@ -3,14 +3,20 @@ databaseChangeLog:
       id: 1
       author: Yury
       changes:
+        # ── Metadata ───────────────────────────────────────────────────────────
         - createTable:
             tableName: metadata
             columns:
               - column:
-                  name: event_id
+                  name: id
                   type: UUID
                   constraints:
                     primaryKey: true
+                    nullable: false
+              - column:
+                  name: event_id
+                  type: UUID
+                  constraints:
                     nullable: false
               - column:
                   name: timestamp
@@ -18,6 +24,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
 
+        # ── Participants ───────────────────────────────────────────────────────
         - createTable:
             tableName: participants
             columns:
@@ -43,6 +50,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
 
+        # ── Payments ────────────────────────────────────────────────────────────
         - createTable:
             tableName: payments
             columns:
@@ -85,21 +93,32 @@ databaseChangeLog:
                   type: UUID
                   constraints:
                     nullable: false
-                    foreignKeyName: fk_payment_sender
-                    references: participants(participant_id)
               - column:
                   name: recipient_id
                   type: UUID
                   constraints:
                     nullable: false
-                    foreignKeyName: fk_payment_recipient
-                    references: participants(participant_id)
 
+        - addForeignKeyConstraint:
+            constraintName: fk_payment_sender
+            baseTableName: payments
+            baseColumnNames: sender_id
+            referencedTableName: participants
+            referencedColumnNames: participant_id
+
+        - addForeignKeyConstraint:
+            constraintName: fk_payment_recipient
+            baseTableName: payments
+            baseColumnNames: recipient_id
+            referencedTableName: participants
+            referencedColumnNames: participant_id
+
+        # ── Payment Messages ───────────────────────────────────────────────────
         - createTable:
             tableName: payment_messages
             columns:
               - column:
-                  name: payment_message_id
+                  name: id
                   type: UUID
                   constraints:
                     primaryKey: true
@@ -109,18 +128,37 @@ databaseChangeLog:
                   type: UUID
                   constraints:
                     nullable: false
-                    foreignKeyName: fk_message_metadata
-                    references: metadata(event_id)
-                    unique: true
               - column:
                   name: payment_id
                   type: UUID
                   constraints:
                     nullable: false
-                    foreignKeyName: fk_message_payment
-                    references: payments(payment_id)
-                    unique: true
 
+        - addForeignKeyConstraint:
+            constraintName: fk_message_metadata
+            baseTableName: payment_messages
+            baseColumnNames: metadata_id
+            referencedTableName: metadata
+            referencedColumnNames: id
+
+        - addForeignKeyConstraint:
+            constraintName: fk_message_payment
+            baseTableName: payment_messages
+            baseColumnNames: payment_id
+            referencedTableName: payments
+            referencedColumnNames: payment_id
+
+        - addUniqueConstraint:
+            tableName: payment_messages
+            columnNames: metadata_id
+            constraintName: uq_payment_messages_metadata
+
+        - addUniqueConstraint:
+            tableName: payment_messages
+            columnNames: payment_id
+            constraintName: uq_payment_messages_payment
+
+        # ── Индексы ────────────────────────────────────────────────────────────
         - createIndex:
             indexName: idx_payment_doc_ref
             tableName: payments

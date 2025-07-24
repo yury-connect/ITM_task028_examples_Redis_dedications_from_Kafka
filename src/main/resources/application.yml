@@ -3,7 +3,7 @@ spring:
     name: demo  # Добавлено двоеточие после "application" и отступ
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/redis-deduplicate_db
+    url: jdbc:postgresql://localhost:5432/redis-deduplicate_db?sslmode=disable
     username: user
     password: 1234
     driver-class-name: org.postgresql.Driver

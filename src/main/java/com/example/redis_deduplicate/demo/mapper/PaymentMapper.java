@@ -14,6 +14,7 @@ public interface PaymentMapper {
 
 
     // 1. Metadata
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "eventId", source = "eventId")
     @Mapping(target = "timestamp", source = "timestamp")
     Metadata toEntity(MetadataDTO dto);

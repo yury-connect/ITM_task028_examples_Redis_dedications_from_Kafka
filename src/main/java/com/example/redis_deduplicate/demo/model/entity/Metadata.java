@@ -25,12 +25,16 @@ public class Metadata {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(updatable = false, nullable = false)
-//    @JdbcTypeCode(SqlTypes.UUID)
+    @Column(name = "id", updatable = false, nullable = false)
+    @JdbcTypeCode(SqlTypes.UUID)
+    private UUID id;
+
+    @Column(name = "event_id", updatable = false, nullable = false)
+    @JdbcTypeCode(SqlTypes.UUID)
     private UUID eventId;
 
     @CreationTimestamp
-    @Column(updatable = false, nullable = false)
-//    @JdbcTypeCode(SqlTypes.TIMESTAMP_WITH_TIMEZONE)
+    @Column(name = "timestamp", updatable = false, nullable = false)
+    @JdbcTypeCode(SqlTypes.TIMESTAMP_WITH_TIMEZONE)
     private ZonedDateTime timestamp;
 }

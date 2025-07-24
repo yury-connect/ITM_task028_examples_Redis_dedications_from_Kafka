@@ -20,17 +20,27 @@ import java.util.UUID;
 @Builder(toBuilder = true)
 public class PaymentMessage {
 
+    /**
+     * Primary key: UUID
+     * Maps to the "id" column in payment_messages table.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "payment_message_id", updatable = false, nullable = false, columnDefinition = "UUID")
+    @Column(name = "id", updatable = false, nullable = false, columnDefinition = "UUID")
     @JdbcTypeCode(SqlTypes.UUID)
     private UUID id;
 
+    /**
+     * References metadata.id
+     */
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "metadata_id", nullable = false)
+    @JoinColumn(name = "metadata_id", nullable = false, referencedColumnName = "id")
     private Metadata metadata;
 
+    /**
+     * References payments.payment_id
+     */
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "payment_id", nullable = false)
+    @JoinColumn(name = "payment_id", nullable = false, referencedColumnName = "payment_id")
     private Payment payment;
 }

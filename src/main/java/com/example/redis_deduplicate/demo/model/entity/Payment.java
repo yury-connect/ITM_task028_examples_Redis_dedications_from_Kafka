@@ -44,11 +44,11 @@ public class Payment {
     @Column(length = 3, nullable = false)
     private String currency;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "sender_id", nullable = false)
     private Participant sender;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "recipient_id", nullable = false)
     private Participant recipient;
 

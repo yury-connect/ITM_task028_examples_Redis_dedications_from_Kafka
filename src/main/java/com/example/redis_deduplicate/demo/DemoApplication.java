@@ -24,36 +24,11 @@ import java.util.UUID;
 public class DemoApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DemoApplication.class, args);
+		// Запускаем контекст
+		var ctx = SpringApplication.run(DemoApplication.class, args);
+
+		// Берём бином Example (в котором уже есть инжектед PaymentProcessor)
+		Example example = ctx.getBean(Example.class);
+		example.go();
 	}
-
-	ParticipantDTO sender = ParticipantDTO.builder()
-			.account("12345678901234567890")
-			.name("ООО Ромашка")
-			.inn("1234567890")
-			.build();
-	ParticipantDTO receiver = ParticipantDTO.builder()
-			.account("12345678901234567890")
-			.name("ОДО АяНеРомашка")
-			.inn("0001234567890")
-			.build();
-	PaymentDTO payment = PaymentDTO.builder()
-			.id("ПП-12345")
-			.docRef("abc123def-4567-89gh-ijkl-mnopqrstuvwx")
-			.date(LocalDate.now())
-			.amount("10000.50")
-			.currency("RUB")
-			.sender(sender)
-			.recipient(receiver)
-			.purpose("Оплата по договору №123 от 2024-01-01")
-			.build();
-	MetadataDTO metadata = MetadataDTO.builder()
-			.eventId(UUID.randomUUID())
-			.timestamp(ZonedDateTime.now())
-			.build();
-	PaymentMessageDTO message = PaymentMessageDTO.builder()
-			.metadata(metadata)
-			.payment(payment)
-			.build();
-
 }
